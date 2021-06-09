@@ -18,20 +18,27 @@ package com.example.android.firebaseui_login_sample
 
 import android.app.Activity
 import android.content.Intent
+import android.content.Intent.getIntent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import com.example.android.firebaseui_login_sample.databinding.FragmentMainBinding
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
+import com.google.android.gms.auth.api.Auth
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.auth.PhoneAuthProvider;
+
 
 class MainFragment() : Fragment() {
 
@@ -51,8 +58,8 @@ class MainFragment() : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
 
         // TODO Remove the two lines below once observeAuthenticationState is implemented.
-        binding.welcomeText.text = viewModel.getFactToDisplay(requireContext())
-        binding.authButton.text = getString(R.string.login_btn)
+//        binding.welcomeText.text = viewModel.getFactToDisplay(requireContext())
+//        binding.authButton.text = getString(R.string.login_btn)
 
         return binding.root
     }
@@ -63,7 +70,7 @@ class MainFragment() : Fragment() {
 
         binding.authButton.setOnClickListener {
             // TODO call launchSignInFlow when authButton is clicked
-            binding.authButton.setOnClickListener { launchSignInFlow() }
+           launchSignInFlow()
         }
     }
 
@@ -125,6 +132,7 @@ class MainFragment() : Fragment() {
                     binding.authButton.text = getString(R.string.login_button_text)
                     binding.authButton.setOnClickListener { launchSignInFlow() }
                     binding.welcomeText.text = factToDisplay
+
                 }
             }
         })
@@ -145,16 +153,29 @@ class MainFragment() : Fragment() {
         // Give users the option to sign in / register with their email or Google account.
         // If users choose to register with their email,
         // they will need to create a password as well.
+        //v2.0 - added phone auth here
+//        val providers = arrayListOf(
+//            AuthUI.IdpConfig.EmailBuilder().build(), AuthUI.IdpConfig.GoogleBuilder().build()
+//            , AuthUI.IdpConfig.PhoneBuilder().build()
+//
+//            // This is where you can provide more ways for users to register and
+//            // sign in.
+//        )
+
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build(), AuthUI.IdpConfig.GoogleBuilder().build()
+            ,AuthUI.IdpConfig.PhoneBuilder().setDefaultCountryIso("IN").build()
 
             // This is where you can provide more ways for users to register and
             // sign in.
         )
 
+
+
         // Create and launch the sign-in intent.
         // We listen to the response of this activity with the
         // SIGN_IN_REQUEST_CODE.
+        Toast.makeText(this.activity,"launching AUTHUI",Toast.LENGTH_SHORT).show()
         startActivityForResult(
             AuthUI.getInstance()
                 .createSignInIntentBuilder()
@@ -162,5 +183,9 @@ class MainFragment() : Fragment() {
                 .build(),
             SIGN_IN_RESULT_CODE
         )
+
+
+
+
     }
 }

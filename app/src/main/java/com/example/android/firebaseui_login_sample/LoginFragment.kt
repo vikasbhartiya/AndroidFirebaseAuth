@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.activity.addCallback
@@ -71,10 +72,18 @@ class LoginFragment : Fragment() {
     private fun launchSignInFlow() {
         // Give users the option to sign in / register with their email or Google account. If users
         // choose to register with their email, they will need to create a password as well.
+//        v2.0 added Phone auth here
+//        val providers = arrayListOf(
+//            AuthUI.IdpConfig.EmailBuilder().build(), AuthUI.IdpConfig.GoogleBuilder().build()
+//        , AuthUI.IdpConfig.PhoneBuilder().build()
+//        )
+
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build(), AuthUI.IdpConfig.GoogleBuilder().build()
-        , AuthUI.IdpConfig.PhoneBuilder().build()
+             ,AuthUI.IdpConfig.PhoneBuilder().setDefaultCountryIso("IN").build()
         )
+
+
 
         // Create and launch sign-in intent. We listen to the response of this activity with the
         // SIGN_IN_RESULT_CODE code.
@@ -83,7 +92,9 @@ class LoginFragment : Fragment() {
                 providers
             ).build(), SIGN_IN_RESULT_CODE
         )
+
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
