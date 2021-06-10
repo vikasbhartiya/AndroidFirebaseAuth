@@ -122,7 +122,7 @@ class MainFragment() : Fragment() {
                     // you can customize the welcome message they see by
                     // utilizing the getFactWithPersonalization() function provided
                     binding.welcomeText.text = getFactWithPersonalization(factToDisplay)
-
+                    binding.welcomeText.text = FirebaseAuth.getInstance().currentUser?.phoneNumber.toString()+FirebaseAuth.getInstance().currentUser?.uid.toString()+FirebaseAuth.getInstance().currentUser?.email
                 }
                 else -> {
                     // TODO 3. Lastly, if there is no logged-in user,

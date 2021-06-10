@@ -25,15 +25,13 @@
             android:id="@+id/mainFragment"
             android:name="com.example.android.firebaseui_login_sample.MainFragment"
             android:label="MainFragment">
+        <action
+            android:id="@+id/action_mainFragment_self"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
-            android:id="@+id/settingsFragment"
-            android:name="com.example.android.firebaseui_login_sample.SettingsFragment"
-            android:label="fragment_settings">
-    </fragment>
-    <fragment
-            android:id="@+id/loginFragment"
-            android:name="com.example.android.firebaseui_login_sample.LoginFragment"
-            android:label="fragment_login"
-            tools:layout="@layout/fragment_login"/>
+        android:id="@+id/welcomeScreen"
+        android:name="com.example.android.firebaseui_login_sample.WelcomeScreen"
+        android:label="fragment_welcome_screen"
+        tools:layout="@layout/fragment_welcome_screen" />
 </navigation>
