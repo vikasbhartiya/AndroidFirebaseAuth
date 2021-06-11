@@ -1,32 +1,60 @@
 package com.example.android.firebaseui_login_sample
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.example.android.firebaseui_login_sample.databinding.FragmentWelcomeScreenBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class WelcomeScreen : Fragment(), Animation.AnimationListener {
+   lateinit var  animFadeIn:Animation
+    lateinit var  animZoomIn:Animation
+    lateinit var  animZoomOut:Animation
+    lateinit var _binding: FragmentWelcomeScreenBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [WelcomeScreen.newInstance] factory method to
- * create an instance of this fragment.
- */
-class WelcomeScreen : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    override fun onAnimationStart(animation: Animation?) {
+
+        if (animation == animFadeIn){
+            Toast.makeText(this.activity,"launching animation",Toast.LENGTH_SHORT).show()
+        }
+
+
+
+    }
+
+    override fun onAnimationEnd(animation: Animation?) {
+
+        // Take any action after completing the animation
+        // check for fade in animation
+        if (animation == animFadeIn) {
+            Toast.makeText(this.activity,"ending fadein animation",Toast.LENGTH_SHORT).show()
+            // set animation listener
+            animZoomIn?.setAnimationListener(this)
+
+            // start the animation
+            _binding.welcomeTextView.startAnimation(animZoomIn)
+        }
+
+        if (animation == animZoomIn) {
+            Toast.makeText(this.activity,"starting zoomin animation",Toast.LENGTH_SHORT).show()
+            // set animation listener
+            animZoomOut?.setAnimationListener(this)
+
+            // start the animation
+            _binding.welcomeTextView.startAnimation(animZoomOut)
+        }
+    }
+
+    override fun onAnimationRepeat(p0: Animation?) {
+        Toast.makeText(this.activity,"repeating animation",Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -34,26 +62,16 @@ class WelcomeScreen : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_welcome_screen, container, false)
+        _binding = FragmentWelcomeScreenBinding.inflate(inflater, container, false)
+        animFadeIn = AnimationUtils.loadAnimation(this.activity,R.anim.fade_in)
+        animZoomIn = AnimationUtils.loadAnimation(this.activity,R.anim.zoom_in)
+        animZoomOut = AnimationUtils.loadAnimation(this.activity,R.anim.zoom_out)
+
+       _binding.welcomeTextView.visibility = View.INVISIBLE
+        animFadeIn?.setAnimationListener(this)
+        _binding.welcomeTextView.startAnimation(animFadeIn)
+
+        return _binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment WelcomeScreen.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            WelcomeScreen().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
-}

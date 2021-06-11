@@ -18,7 +18,6 @@ package com.example.android.firebaseui_login_sample
 
 import android.app.Activity
 import android.content.Intent
-import android.content.Intent.getIntent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -29,18 +28,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.example.android.firebaseui_login_sample.databinding.FragmentMainBinding
+import androidx.navigation.fragment.NavHostFragment
+import com.example.android.firebaseui_login_sample.databinding.FragmentLoginBinding
+import com.example.android.firebaseui_login_sample.databinding.FragmentStartBinding
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
-import com.google.android.gms.auth.api.Auth
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.PhoneAuthOptions
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.auth.PhoneAuthProvider;
 
 
-class MainFragment() : Fragment() {
+class LoginFragment() : Fragment() {
 
     companion object {
         const val TAG = "MainFragment"
@@ -50,26 +46,23 @@ class MainFragment() : Fragment() {
 
     // Get a reference to the ViewModel scoped to this Fragment
     private val viewModel by viewModels<LoginViewModel>()
-    private lateinit var binding: FragmentMainBinding
+    private lateinit var _binding: FragmentLoginBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
+//        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
-        // TODO Remove the two lines below once observeAuthenticationState is implemented.
-//        binding.welcomeText.text = viewModel.getFactToDisplay(requireContext())
-//        binding.authButton.text = getString(R.string.login_btn)
 
-        return binding.root
+        return _binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeAuthenticationState()
 
-        binding.authButton.setOnClickListener {
-            // TODO call launchSignInFlow when authButton is clicked
+        _binding.authButton.setOnClickListener {
            launchSignInFlow()
         }
     }
@@ -98,22 +91,12 @@ class MainFragment() : Fragment() {
     private fun observeAuthenticationState() {
         val factToDisplay = viewModel.getFactToDisplay(requireContext())
 
-        // TODO Use the authenticationState variable from LoginViewModel to update the UI
-        //  accordingly.
-        //
-        //  TODO If there is a logged-in user, authButton should display Logout. If the
-        //   user is logged in, you can customize the welcome message by utilizing
-        //   getFactWithPersonalition(). I
-
-        // TODO If there is no logged in user, authButton should display Login and launch the sign
-        //  in screen when clicked. There should also be no personalization of the message
-        //  displayed.
 
         viewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
             when (authenticationState) {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
-                    binding.authButton.text = getString(R.string.logout_button_text)
-                    binding.authButton.setOnClickListener {
+                    _binding.authButton.text = getString(R.string.logout_button_text)
+                    _binding.authButton.setOnClickListener {
                         // TODO implement logging out user in next step
                         AuthUI.getInstance().signOut(requireContext())
                     }
@@ -121,17 +104,21 @@ class MainFragment() : Fragment() {
                     // TODO 2. If the user is logged in,
                     // you can customize the welcome message they see by
                     // utilizing the getFactWithPersonalization() function provided
-                    binding.welcomeText.text = getFactWithPersonalization(factToDisplay)
-                    binding.welcomeText.text = FirebaseAuth.getInstance().currentUser?.phoneNumber.toString()+FirebaseAuth.getInstance().currentUser?.uid.toString()+FirebaseAuth.getInstance().currentUser?.email
+                    _binding.welcomeText.text = getFactWithPersonalization(factToDisplay)
+                    _binding.welcomeText.text = FirebaseAuth.getInstance().currentUser?.phoneNumber.toString()+FirebaseAuth.getInstance().currentUser?.uid.toString()+FirebaseAuth.getInstance().currentUser?.email
                 }
                 else -> {
                     // TODO 3. Lastly, if there is no logged-in user,
                     // auth_button should display Login and
                     //  launch the sign in screen when clicked.
+//                    Vikas
+//                    move the user to the welcome screen using navcontroller
 
-                    binding.authButton.text = getString(R.string.login_button_text)
-                    binding.authButton.setOnClickListener { launchSignInFlow() }
-                    binding.welcomeText.text = factToDisplay
+//                    NavHostFragment.findNavController(this).navigate(R.id.action_loginFragment_to_welcomeScreen)
+
+                    _binding.authButton.text = getString(R.string.login_button_text)
+                    _binding.authButton.setOnClickListener { launchSignInFlow() }
+                    _binding.welcomeText.text = factToDisplay
 
                 }
             }

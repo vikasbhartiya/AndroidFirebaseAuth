@@ -19,19 +19,28 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/nav_graph"
-            app:startDestination="@id/mainFragment">
+    app:startDestination="@id/startFragment">
 
     <fragment
-            android:id="@+id/mainFragment"
-            android:name="com.example.android.firebaseui_login_sample.MainFragment"
-            android:label="MainFragment">
-        <action
-            android:id="@+id/action_mainFragment_self"
-            app:destination="@id/mainFragment" />
-    </fragment>
+            android:id="@+id/loginFragment"
+            android:name="com.example.android.firebaseui_login_sample.LoginFragment"
+            android:label="Login Fragment"/>
     <fragment
         android:id="@+id/welcomeScreen"
         android:name="com.example.android.firebaseui_login_sample.WelcomeScreen"
-        android:label="fragment_welcome_screen"
+        android:label="Welcome Screen"
         tools:layout="@layout/fragment_welcome_screen" />
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="com.example.android.firebaseui_login_sample.StartFragment"
+        android:label="fragment_start"
+        tools:layout="@layout/fragment_start" >
+        <action
+            android:id="@+id/action_startFragment_to_welcomeScreen"
+            app:destination="@id/welcomeScreen" />
+        <action
+            android:id="@+id/action_startFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
 </navigation>
