@@ -5,10 +5,16 @@
     android:layout_height="match_parent"
     tools:context=".WelcomeScreen">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/welcomeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:fontFamily="casual"
+        android:text="@string/welcome_message"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        />
 
 </FrameLayout>
