@@ -1,4 +1,4 @@
-package com.example.android.firebaseui_login_sample
+     package com.example.android.firebaseui_login_sample.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,10 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import com.example.android.firebaseui_login_sample.viewmodels.LoginViewModel
+import com.example.android.firebaseui_login_sample.R
 import com.example.android.firebaseui_login_sample.databinding.FragmentStartBinding
-import com.firebase.ui.auth.AuthUI
-import com.google.firebase.auth.FirebaseAuth
 
 class StartFragment : Fragment() {
 
@@ -43,7 +44,15 @@ class StartFragment : Fragment() {
         viewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
             when (authenticationState) {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
-                    NavHostFragment.findNavController(this).navigate(R.id.action_startFragment_to_loginFragment)
+//                    NavHostFragment.findNavController(this).navigate(R.id.action_startFragment_to_profileSummaryFragment)
+//                    navhostfragment call above works - for better practice - checking if the call below works or not
+
+//                    view?.findNavController()
+//                        ?.navigate(R.id.action_startFragment_to_profileSummaryFragment)
+//                 below is same call as above - except it uses Navigation Direction classes generated
+//                    by safeargs plugin
+                    view?.findNavController()
+                        ?.navigate(StartFragmentDirections.actionStartFragmentToProfileSummaryFragment())
                 }
                 else -> {
                     //  if there is no logged-in user,

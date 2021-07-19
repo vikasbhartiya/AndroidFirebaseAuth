@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package com.example.android.firebaseui_login_sample
+package com.example.android.firebaseui_login_sample.viewmodels
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.preference.PreferenceManager
+import com.example.android.firebaseui_login_sample.utility.FirebaseUserLiveData
+import com.example.android.firebaseui_login_sample.R
 import kotlin.random.Random
 
 class LoginViewModel : ViewModel() {

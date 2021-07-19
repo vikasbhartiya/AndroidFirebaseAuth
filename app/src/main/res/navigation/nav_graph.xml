@@ -22,25 +22,85 @@
     app:startDestination="@id/startFragment">
 
     <fragment
-            android:id="@+id/loginFragment"
-            android:name="com.example.android.firebaseui_login_sample.LoginFragment"
-            android:label="Login Fragment"/>
-    <fragment
         android:id="@+id/welcomeScreen"
-        android:name="com.example.android.firebaseui_login_sample.WelcomeScreen"
+        android:name="com.example.android.firebaseui_login_sample.ui.WelcomeScreen"
         android:label="Welcome Screen"
-        tools:layout="@layout/fragment_welcome_screen" />
+        tools:layout="@layout/fragment_welcome_screen" >
+        <action
+            android:id="@+id/action_welcomeScreen_to_starterOne"
+            app:destination="@id/starterOne" />
+    </fragment>
     <fragment
         android:id="@+id/startFragment"
-        android:name="com.example.android.firebaseui_login_sample.StartFragment"
+        android:name="com.example.android.firebaseui_login_sample.ui.StartFragment"
         android:label="fragment_start"
         tools:layout="@layout/fragment_start" >
         <action
             android:id="@+id/action_startFragment_to_welcomeScreen"
             app:destination="@id/welcomeScreen" />
         <action
-            android:id="@+id/action_startFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_startFragment_to_profileSummaryFragment"
+            app:destination="@id/profileSummaryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/starterOne"
+        android:name="com.example.android.firebaseui_login_sample.ui.StarterOne"
+        android:label="fragment_starter_one"
+        tools:layout="@layout/fragment_starter_one" >
+        <action
+            android:id="@+id/action_starterOne_to_getNameFragment"
+            app:destination="@id/getNameFragment" />
+        <action
+            android:id="@+id/action_starterOne_to_profileSummaryFragment"
+            app:destination="@id/profileSummaryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/getNameFragment"
+        android:name="com.example.android.firebaseui_login_sample.ui.GetNameFragment"
+        android:label="fragment_get_name"
+        tools:layout="@layout/fragment_get_name" >
+        <action
+            android:id="@+id/action_getNameFragment_to_getDobFragment"
+            app:destination="@id/getDobFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/getDobFragment"
+        android:name="com.example.android.firebaseui_login_sample.ui.GetDobFragment"
+        android:label="fragment_get_dob"
+        tools:layout="@layout/fragment_get_dob" >
+        <action
+            android:id="@+id/action_getDobFragment_to_getWorkDetailsFragment"
+            app:destination="@id/getWorkDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/getWorkDetailsFragment"
+        android:name="com.example.android.firebaseui_login_sample.ui.GetWorkDetailsFragment"
+        android:label="fragment_get_work_details"
+        tools:layout="@layout/fragment_get_work_details" >
+        <action
+            android:id="@+id/action_getWorkDetailsFragment_to_getSalaryFragment"
+            app:destination="@id/getSalaryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/getSalaryFragment"
+        android:name="com.example.android.firebaseui_login_sample.ui.GetSalaryFragment"
+        android:label="fragment_get_salary"
+        tools:layout="@layout/fragment_get_salary" >
+        <action
+            android:id="@+id/action_getSalaryFragment_to_profileSummaryFragment"
+            app:destination="@id/profileSummaryFragment" />
+        <action
+            android:id="@+id/action_getSalaryFragment_to_starterOne"
+            app:destination="@id/starterOne" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileSummaryFragment"
+        android:name="com.example.android.firebaseui_login_sample.ui.ProfileSummaryFragment"
+        android:label="fragment_profile_summary"
+        tools:layout="@layout/fragment_profile_summary" >
+        <action
+            android:id="@+id/action_profileSummaryFragment_to_welcomeScreen"
+            app:destination="@id/welcomeScreen" />
     </fragment>
 
 </navigation>

@@ -1,4 +1,4 @@
-package com.example.android.firebaseui_login_sample
+package com.example.android.firebaseui_login_sample.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,8 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
+import com.example.android.firebaseui_login_sample.R
 import com.example.android.firebaseui_login_sample.databinding.FragmentWelcomeScreenBinding
 
 class WelcomeScreen : Fragment(), Animation.AnimationListener {
@@ -47,6 +49,10 @@ class WelcomeScreen : Fragment(), Animation.AnimationListener {
             // start the animation
             _binding.welcomeTextView.startAnimation(animZoomOut)
         }
+        if (animation == animZoomOut) {
+            NavHostFragment.findNavController(this).navigate(R.id.action_welcomeScreen_to_starterOne)
+        }
+
     }
 
     override fun onAnimationRepeat(p0: Animation?) {
@@ -63,9 +69,9 @@ class WelcomeScreen : Fragment(), Animation.AnimationListener {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentWelcomeScreenBinding.inflate(inflater, container, false)
-        animFadeIn = AnimationUtils.loadAnimation(this.activity,R.anim.fade_in)
-        animZoomIn = AnimationUtils.loadAnimation(this.activity,R.anim.zoom_in)
-        animZoomOut = AnimationUtils.loadAnimation(this.activity,R.anim.zoom_out)
+        animFadeIn = AnimationUtils.loadAnimation(this.activity, R.anim.fade_in)
+        animZoomIn = AnimationUtils.loadAnimation(this.activity, R.anim.zoom_in)
+        animZoomOut = AnimationUtils.loadAnimation(this.activity, R.anim.zoom_out)
 
        _binding.welcomeTextView.visibility = View.INVISIBLE
         animFadeIn?.setAnimationListener(this)

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.firebaseui_login_sample
+package com.example.android.firebaseui_login_sample.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -25,15 +25,15 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.android.firebaseui_login_sample.databinding.ActivityMainBinding
 import com.example.android.firebaseui_login_sample.databinding.FragmentWelcomeScreenBinding
+import com.example.android.firebaseui_login_sample.viewmodels.RegistrationViewModel
 
 class MainActivity : AppCompatActivity() {
-
+    lateinit var registrationViewModel: RegistrationViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_main)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        registrationViewModel = RegistrationViewModel()
     }
-
 }

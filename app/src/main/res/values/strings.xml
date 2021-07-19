@@ -34,4 +34,17 @@
     <string name="preference_fact_type_key">fact_type_pref</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="StarterOne">Let\'s get you started. Please Click Start button below to begin:</string>
+    <string name="Enter_Your_Name">Enter your full name:</string>
+    <string name="Select_Skills">What do you do?</string>
+    <string name="twitterUsername">\@joeytribbiani</string>
+
+    <string-array name="Skills">
+        <item>KaamWaali</item>
+        <item>Nurse</item>
+        <item>Bathroom Safai Waala</item>
+        <item>Security Guard</item>
+        <item>Sabziwala</item>
+        <item>Ironwala</item>
+    </string-array>
 </resources>

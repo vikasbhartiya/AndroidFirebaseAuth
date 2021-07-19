@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.GetSalaryFragment">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextSalM"
+        android:layout_centerInParent="true"
+        android:hint="Expected payment per month"
+        android:inputType="number"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextSalH"
+        android:layout_centerInParent="true"
+        android:hint="Expected payment per hour"
+        android:layout_below="@+id/editTextSalM"
+        android:paddingTop="@dimen/button_text_size"
+        android:inputType="number"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Next2"
+        android:text="---->"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/editTextSalH"
+        android:paddingTop="@dimen/button_text_size"
+        />
+
+</RelativeLayout>

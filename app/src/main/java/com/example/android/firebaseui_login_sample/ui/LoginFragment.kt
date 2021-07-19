@@ -1,20 +1,4 @@
-/*
- * Copyright 2019, The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package com.example.android.firebaseui_login_sample
+package com.example.android.firebaseui_login_sample.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -24,13 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.NavHostFragment
+import com.example.android.firebaseui_login_sample.viewmodels.LoginViewModel
+import com.example.android.firebaseui_login_sample.R
 import com.example.android.firebaseui_login_sample.databinding.FragmentLoginBinding
-import com.example.android.firebaseui_login_sample.databinding.FragmentStartBinding
+import com.example.android.firebaseui_login_sample.utility.HelperLibrary
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
@@ -40,14 +24,14 @@ class LoginFragment() : Fragment() {
 
     companion object {
         const val TAG = "MainFragment"
-        const val SIGN_IN_RESULT_CODE = 1001
+        const val SIGN_IN_REQUEST_CODE = 1001
 
     }
 
     // Get a reference to the ViewModel scoped to this Fragment
     private val viewModel by viewModels<LoginViewModel>()
     private lateinit var _binding: FragmentLoginBinding
-
+    private val Helper:HelperLibrary = HelperLibrary()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -63,13 +47,13 @@ class LoginFragment() : Fragment() {
         observeAuthenticationState()
 
         _binding.authButton.setOnClickListener {
-           launchSignInFlow()
+            launchSignInFlow()
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == SIGN_IN_RESULT_CODE) {
+        if (requestCode == SIGN_IN_REQUEST_CODE) {
             val response = IdpResponse.fromResultIntent(data)
             if (resultCode == Activity.RESULT_OK) {
                 // User successfully signed in.
@@ -97,29 +81,16 @@ class LoginFragment() : Fragment() {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
                     _binding.authButton.text = getString(R.string.logout_button_text)
                     _binding.authButton.setOnClickListener {
-                        // TODO implement logging out user in next step
                         AuthUI.getInstance().signOut(requireContext())
                     }
 
-                    // TODO 2. If the user is logged in,
-                    // you can customize the welcome message they see by
-                    // utilizing the getFactWithPersonalization() function provided
                     _binding.welcomeText.text = getFactWithPersonalization(factToDisplay)
                     _binding.welcomeText.text = FirebaseAuth.getInstance().currentUser?.phoneNumber.toString()+FirebaseAuth.getInstance().currentUser?.uid.toString()+FirebaseAuth.getInstance().currentUser?.email
                 }
                 else -> {
-                    // TODO 3. Lastly, if there is no logged-in user,
-                    // auth_button should display Login and
-                    //  launch the sign in screen when clicked.
-//                    Vikas
-//                    move the user to the welcome screen using navcontroller
-
-//                    NavHostFragment.findNavController(this).navigate(R.id.action_loginFragment_to_welcomeScreen)
-
                     _binding.authButton.text = getString(R.string.login_button_text)
-                    _binding.authButton.setOnClickListener { launchSignInFlow() }
+                    _binding.authButton.setOnClickListener {launchSignInFlow() }
                     _binding.welcomeText.text = factToDisplay
-
                 }
             }
         })
@@ -137,28 +108,6 @@ class LoginFragment() : Fragment() {
     }
 
     private fun launchSignInFlow() {
-        // Give users the option to sign in / register with their email or Google account.
-        // If users choose to register with their email,
-        // they will need to create a password as well.
-        //v2.0 - added phone auth here
-//        val providers = arrayListOf(
-//            AuthUI.IdpConfig.EmailBuilder().build(), AuthUI.IdpConfig.GoogleBuilder().build()
-//            , AuthUI.IdpConfig.PhoneBuilder().build()
-//
-//            // This is where you can provide more ways for users to register and
-//            // sign in.
-//        )
-
-        val providers = arrayListOf(
-            AuthUI.IdpConfig.EmailBuilder().build(), AuthUI.IdpConfig.GoogleBuilder().build()
-            ,AuthUI.IdpConfig.PhoneBuilder().setDefaultCountryIso("IN").build()
-
-            // This is where you can provide more ways for users to register and
-            // sign in.
-        )
-
-
-
         // Create and launch the sign-in intent.
         // We listen to the response of this activity with the
         // SIGN_IN_REQUEST_CODE.
@@ -166,13 +115,9 @@ class LoginFragment() : Fragment() {
         startActivityForResult(
             AuthUI.getInstance()
                 .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
+                .setAvailableProviders(Helper.providers)
                 .build(),
-            SIGN_IN_RESULT_CODE
+            SIGN_IN_REQUEST_CODE
         )
-
-
-
-
     }
 }

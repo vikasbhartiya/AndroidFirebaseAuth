@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.firebaseui_login_sample
+package com.example.android.firebaseui_login_sample.utility
 
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.FirebaseAuth
